@@ -200,7 +200,10 @@
             <span>Bronce 0–99</span>
             <span>Plata 100–249</span>
             <span>Oro 250+</span>
-            <span>Reset a los 15 partidos</span>
+            <span>⭐ Estrella 50</span>
+            <span>🔥 Top 100</span>
+            <span>👑 Corona 250</span>
+            <span>🐐 GOAT 400</span>
           </div>
           <form id="leaveForm" style="margin-top:16px;padding-top:14px;border-top:1px solid var(--line)">
             <h2 style="font-size:20px">Salirme de este partido</h2>
@@ -285,11 +288,11 @@
 
   <script>
     const API = "";
-    const BADGES = [
-      { min: 50, icon: "🎟", title: "Debut" },
-      { min: 100, icon: "📅", title: "Asistencia" },
-      { min: 250, icon: "⭐", title: "Titular" },
-      { min: 400, icon: "©️", title: "Capitán" }
+ const BADGES = [
+      { min: 50, icon: "⭐", title: "Estrella" },
+      { min: 100, icon: "🔥", title: "Top" },
+      { min: 250, icon: "👑", title: "Corona" },
+      { min: 400, icon: "🐐", title: "GOAT" }
     ];
     const $ = (id) => document.getElementById(id);
     let pendingPhoto = "";
