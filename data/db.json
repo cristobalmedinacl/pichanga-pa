@@ -1,0 +1,14 @@
+{
+  "cfg": {
+    "pin": "admin123",
+    "venueId": "laurita",
+    "date": "2026-09-19",
+    "time": "19:00",
+    "max": 14,
+    "pts": 50,
+    "season": 1,
+    "matchInSeason": 1
+  },
+  "profiles": {},
+  "match": []
+}
