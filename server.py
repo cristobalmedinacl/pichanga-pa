@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 """Servidor sin npm. En Windows: py server.py"""
 import json
 import os
@@ -8,24 +8,25 @@ from urllib.parse import urlparse, parse_qs
 ROOT = os.path.dirname(os.path.abspath(__file__))
 PUBLIC = os.path.join(ROOT, "public")
 DB_PATH = os.path.join(ROOT, "data", "db.json")
-PORT = int(os.environ.get("PORT", "10000"))`r`nHOST = "0.0.0.0"
+PORT = int(os.environ.get("PORT", "10000"))
+HOST = "0.0.0.0"
 
 VENUES = [
-    {"id": "laurita", "name": "Centro Deportivo Laurita VicuÃ±a", "addr": "Av. EjÃ©rcito Libertador 2341, Villa La Foresta, Puente Alto"},
-    {"id": "amador", "name": "Complejo Deportivo Amador Donoso", "addr": "Camino PÃºblico 0113, Puente Alto"},
-    {"id": "estadio", "name": "Estadio Municipal de Puente Alto", "addr": "Nemesio VicuÃ±a 450, Puente Alto"},
-    {"id": "gabriela", "name": "Centro Deportivo Gabriela", "addr": "Av. EjÃ©rcito Libertador 4011, Puente Alto"},
+    {"id": "laurita", "name": "Centro Deportivo Laurita Vicuña", "addr": "Av. Ejército Libertador 2341, Villa La Foresta, Puente Alto"},
+    {"id": "amador", "name": "Complejo Deportivo Amador Donoso", "addr": "Camino Público 0113, Puente Alto"},
+    {"id": "estadio", "name": "Estadio Municipal de Puente Alto", "addr": "Nemesio Vicuña 450, Puente Alto"},
+    {"id": "gabriela", "name": "Centro Deportivo Gabriela", "addr": "Av. Ejército Libertador 4011, Puente Alto"},
     {"id": "tocornal", "name": "Centro Deportivo Domingo Tocornal", "addr": "Domingo Tocornal con 4 Oriente, Puente Alto"},
     {"id": "gimnasio", "name": "Gimnasio Municipal", "addr": "Balmaceda 265, Puente Alto"},
-    {"id": "patinodromo", "name": "PatinÃ³dromo Municipal", "addr": "Av. EjÃ©rcito Libertador con Coyhaique, Puente Alto"},
+    {"id": "patinodromo", "name": "Patinódromo Municipal", "addr": "Av. Ejército Libertador con Coyhaique, Puente Alto"},
     {"id": "sanfrancisco", "name": "Centro Comunitario Parque San Francisco", "addr": "Troncal San Francisco con Nonato Coo, Puente Alto"},
     {"id": "luismatte", "name": "Cancha de Futbolito Luis Matte", "addr": "Miguel Covarrubias 2811, Puente Alto"},
-    {"id": "sangeronimo", "name": "Cancha Futbolito San GerÃ³nimo", "addr": "Las Achiras con Los Caciques, Puente Alto"},
-    {"id": "humberto", "name": "Cancha Humberto DÃ­az Casanueva", "addr": "Tome con Caleta Brava, Puente Alto"},
+    {"id": "sangeronimo", "name": "Cancha Futbolito San Gerónimo", "addr": "Las Achiras con Los Caciques, Puente Alto"},
+    {"id": "humberto", "name": "Cancha Humberto Díaz Casanueva", "addr": "Tome con Caleta Brava, Puente Alto"},
     {"id": "faustina", "name": "Complejo Deportivo Santa Faustina", "addr": "Cuatro Oriente 1040, Puente Alto"},
     {"id": "maipo", "name": "Cancha Maipo", "addr": "Tocornal Grez con Sargento Menadier, Puente Alto"},
     {"id": "altosoccer", "name": "Espacio Deportivo Alto Soccer", "addr": "Av. Eyzaguirre 3769, Puente Alto"},
-    {"id": "estacion", "name": "EstaciÃ³n Futbolito", "addr": "Av. Concha y Toro 2980, Puente Alto"},
+    {"id": "estacion", "name": "Estación Futbolito", "addr": "Av. Concha y Toro 2980, Puente Alto"},
     {"id": "cdd", "name": "Complejo Deportivo CDD", "addr": "Av. Concha y Toro 0190, Puente Alto"},
 ]
 
@@ -165,9 +166,9 @@ class Handler(SimpleHTTPRequestHandler):
             if len(leave) < 4:
                 return self._json(400, {"error": "La clave debe tener al menos 4 caracteres."})
             if key in db["match"]:
-                return self._json(409, {"error": "Ese nombre ya estÃ¡ en este partido."})
+                return self._json(409, {"error": "Ese nombre ya está en este partido."})
             if len(db["match"]) >= db["cfg"]["max"]:
-                return self._json(409, {"error": "La lista ya estÃ¡ completa."})
+                return self._json(409, {"error": "La lista ya está completa."})
             prev = db["profiles"].get(key) or {"name": clean, "nick": "", "photo": "", "points": 0, "matches": 0}
             db["profiles"][key] = {
                 "name": prev.get("name") or clean,
@@ -187,7 +188,7 @@ class Handler(SimpleHTTPRequestHandler):
             pin = str(body.get("leaveKey") or "").strip()
             p = db["profiles"].get(key)
             if not p or key not in db["match"]:
-                return self._json(404, {"error": "Ese nombre no estÃ¡ en este partido."})
+                return self._json(404, {"error": "Ese nombre no está en este partido."})
             if p.get("leaveKey") != pin:
                 return self._json(401, {"error": "Clave incorrecta."})
             db["match"] = [x for x in db["match"] if x != key]
@@ -278,7 +279,7 @@ class Handler(SimpleHTTPRequestHandler):
                 p["points"] = p.get("points", 0) + db["cfg"]["pts"]
             elif act == "add":
                 if key in db["match"]:
-                    return self._json(409, {"error": "Ya estÃ¡ en este partido."})
+                    return self._json(409, {"error": "Ya está en este partido."})
                 if len(db["match"]) >= db["cfg"]["max"]:
                     return self._json(409, {"error": "Cupo lleno."})
                 db["match"].append(key)
@@ -295,8 +296,6 @@ class Handler(SimpleHTTPRequestHandler):
 
 if __name__ == "__main__":
     os.chdir(ROOT)
+    print("Listening on %s:%s" % (HOST, PORT), flush=True)
     httpd = ThreadingHTTPServer((HOST, PORT), Handler)
-    print(f"Pichanga PA en http://localhost:{PORT}")
-    print("Cierra esta ventana o Ctrl+C para detener.")
     httpd.serve_forever()
-
