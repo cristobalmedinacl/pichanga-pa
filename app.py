@@ -159,13 +159,13 @@ def reset_season():
     ok, db = pin_ok(body)
     if not ok:
         return jsonify({"error": "Clave admin incorrecta"}), 401
-    db["cfg"]["season"] += 1
+    db["cfg"]["season"] = 1
     db["cfg"]["matchInSeason"] = 1
     for k in db["profiles"]:
         db["profiles"][k]["points"] = 0
     db["match"] = []
     s.save(db)
-    return jsonify({"ok": True, "message": "Temporada reiniciada."})
+    return jsonify({"ok": True, "message": "Temporada 1. Puntos en 0."})
 
 
 @app.post("/api/admin/player")

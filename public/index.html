@@ -172,7 +172,7 @@
             </div>
           </div>
           <div class="field">
-            <label for="name">Nombre y Apellido</label>
+            <label for="name">Nombre</label>
             <input id="name" type="text" required maxlength="32" placeholder="Ej. Cristóbal Medina" />
           </div>
           <div class="field">
@@ -262,7 +262,7 @@
             <button class="cta" id="saveCfg" type="button">Guardar cambios</button>
             <div class="row" style="margin-top:10px">
               <button class="cta dark" id="nextMatch" type="button">Siguiente partido</button>
-              <button class="cta warn" id="resetSeason" type="button">Reiniciar temporada (puntos a 0)</button>
+              <button class="cta warn" id="resetSeason" type="button">Volver a temporada 1</button>
             </div>
           </div>
           <div>
@@ -501,7 +501,7 @@
       } catch (err) { toast(err.message); }
     });
     $("resetSeason").addEventListener("click", async () => {
-      if (!confirm("¿Pasar todos los puntos a 0 y empezar la temporada de nuevo?")) return;
+      if (!confirm("¿Volver a temporada 1 y dejar todos los puntos en 0?")) return;
       try {
         const out = await api("/api/admin/reset-season", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ pin: adminPin }) });
         await refresh(); await fillAdmin();
