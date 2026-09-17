@@ -295,7 +295,7 @@ class Handler(SimpleHTTPRequestHandler):
 
 if __name__ == "__main__":
     os.chdir(ROOT)
-    httpd = ThreadingHTTPServer(("127.0.0.1", PORT), Handler)
+    httpd = ThreadingHTTPServer(("0.0.0.0", PORT), Handler)
     print(f"Pichanga PA en http://localhost:{PORT}")
     print("Cierra esta ventana o Ctrl+C para detener.")
     httpd.serve_forever()
