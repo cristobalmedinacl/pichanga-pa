@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Convocatoria · Puente Alto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --night: #08140c; --pine: #12351d; --leaf: #1f7a45; --cream: #f6f1e6;
+      --paper: #fffaf1; --ink: #152017; --mute: #66756a;
+      --line: rgba(18,53,29,.12); --gold: #c9a24a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { min-height: 100%; background: var(--night); color: var(--ink); font-family: "Outfit", system-ui, sans-serif; }
+    body {
+      background:
+        radial-gradient(900px 480px at 8% -8%, rgba(201,162,74,.12), transparent 50%),
+        radial-gradient(700px 400px at 100% 0%, rgba(47,140,78,.14), transparent 46%),
+        linear-gradient(180deg, #0a1a10, #08140c 40%, #0c1d12);
+    }
+    .wrap { width: min(1120px, calc(100% - 28px)); margin: 0 auto; padding: 26px 0 80px; }
+    header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 22px; color: var(--cream); flex-wrap: wrap; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .crest { width: 46px; height: 46px; border-radius: 16px; display: grid; place-items: center; background: linear-gradient(160deg, #f3e2b0, #c9a24a); font-size: 20px; }
+    .brand em { display: block; font-style: normal; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; opacity: .7; }
+    .brand strong { font-family: "Fraunces", serif; font-size: 22px; font-weight: 500; }
+    .nav { display: flex; gap: 8px; align-items: center; }
+    .ghost {
+      border: 1px solid rgba(246,241,230,.16); background: rgba(255,255,255,.06);
+      color: var(--cream); padding: 8px 13px; border-radius: 999px; font: inherit; font-size: 13px; cursor: pointer;
+    }
+    .status { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: #7dff9a; box-shadow: 0 0 0 4px rgba(125,255,154,.14); }
+    .hero { display: grid; grid-template-columns: 1.2fr .8fr; gap: 16px; margin-bottom: 16px; }
+    .card { background: var(--paper); border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,.22); }
+    .poster { padding: 32px 32px 26px; }
+    .eyebrow { color: var(--leaf); font-size: 12px; font-weight: 650; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 12px; }
+    h1 { font-family: "Fraunces", serif; font-weight: 500; font-size: clamp(32px, 5vw, 50px); line-height: .96; letter-spacing: -.03em; }
+    h1 i { font-style: italic; color: var(--leaf); }
+    .lead { margin: 14px 0 18px; max-width: 540px; color: var(--mute); font-size: 16px; line-height: 1.6; }
+    .facts { display: flex; flex-wrap: wrap; gap: 8px; }
+    .fact { background: #f0efe4; border: 1px solid var(--line); border-radius: 999px; padding: 8px 12px; font-size: 13px; color: #2b4332; }
+    .side { padding: 16px; display: grid; gap: 12px; }
+    .spots { background: var(--pine); color: #eaf6ee; border-radius: 18px; padding: 18px 16px 14px; text-align: center; }
+    .spots b { display: block; font-family: "Fraunces", serif; font-size: 54px; font-weight: 500; line-height: .9; color: #f0d48a; }
+    .spots b small { font-size: 20px; color: #b7cbbd; margin-left: 4px; }
+    .bar { height: 7px; background: rgba(255,255,255,.12); border-radius: 99px; overflow: hidden; margin: 12px 0 8px; }
+    .bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #c9a24a, #f0d48a); }
+    iframe { width: 100%; height: 150px; border: 0; border-radius: 16px; filter: saturate(.85) contrast(1.05); }
+    .addr { font-size: 13.5px; color: var(--mute); line-height: 1.5; }
+    .addr strong { color: var(--ink); }
+    .addr a { color: var(--leaf); font-weight: 650; text-decoration: none; }
+    .layout { display: grid; grid-template-columns: 320px 1fr; gap: 16px; }
+    form, .gallery, .admin { padding: 22px; }
+    h2 { font-family: "Fraunces", serif; font-size: 26px; font-weight: 500; margin-bottom: 6px; }
+    .sub { color: var(--mute); font-size: 13.5px; margin-bottom: 16px; line-height: 1.5; }
+    label { display: block; margin-bottom: 6px; font-size: 12px; font-weight: 650; letter-spacing: .05em; text-transform: uppercase; color: #5d6e62; }
+    .field { margin-bottom: 13px; }
+    input[type="text"], input[type="password"], input[type="number"], input[type="date"], input[type="time"], select, textarea {
+      width: 100%; border: 1px solid var(--line); background: #fff; border-radius: 14px;
+      padding: 12px 13px; font: inherit; font-size: 15px; outline: none;
+    }
+    .photo-row { display: grid; grid-template-columns: 92px 1fr; gap: 12px; align-items: center; }
+    .preview-mini { width: 92px; height: 118px; border-radius: 10px; overflow: hidden; background: linear-gradient(180deg, #2a6a3e, #12351d); }
+    .preview-mini img, .preview-mini .ph { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .preview-mini .ph { display: grid; place-items: center; color: rgba(255,255,255,.7); font-size: 28px; }
+    .file-btn { display: block; border: 1px dashed #c9d8cb; background: #f7f4ea; border-radius: 14px; padding: 12px; text-align: center; cursor: pointer; font-size: 13.5px; color: #35553d; }
+    .file-btn input { display: none; }
+    .cta { width: 100%; border: 0; border-radius: 16px; padding: 14px 16px; font: inherit; font-weight: 700; cursor: pointer; color: #1a1608; background: linear-gradient(180deg, #f0d48a, #c9a24a); }
+    .cta:disabled { opacity: .5; cursor: not-allowed; }
+    .cta.dark { background: var(--pine); color: #f6f1e6; }
+    .cta.warn { background: #8a3a2a; color: #fff; }
+    .hint { text-align: center; color: var(--mute); font-size: 12.5px; margin-top: 10px; }
+    .gallery-top { display: flex; justify-content: space-between; align-items: end; margin-bottom: 14px; gap: 12px; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 12px; }
+    .fifa { aspect-ratio: 3 / 4.15; border-radius: 14px; position: relative; overflow: hidden; box-shadow: 0 10px 24px rgba(0,0,0,.18); }
+    .fifa.empty { background: repeating-linear-gradient(135deg, #efe8d6 0 8px, #f7f2e4 8px 16px); border: 1.5px dashed #d5c9a6; display: grid; place-items: center; color: #8b826c; text-align: center; padding: 12px; font-size: 12.5px; }
+    .fifa.empty b { display: block; font-size: 18px; color: #6d6756; margin-bottom: 4px; }
+    .fifa.gold { background: linear-gradient(180deg, #f8e7a4 0%, #d4b15a 42%, #a9832c 100%); }
+    .fifa.silver { background: linear-gradient(180deg, #eef2f4 0%, #c5ced4 42%, #8f9aa3 100%); }
+    .fifa.bronze { background: linear-gradient(180deg, #edc8a4 0%, #c88958 42%, #8d5a32 100%); }
+    .fifa-inner { position: absolute; inset: 7px 7px 8px; display: flex; flex-direction: column; }
+    .ovr { position: absolute; top: 6px; left: 8px; z-index: 2; color: #1a1608; text-align: center; line-height: .9; }
+    .ovr strong { display: block; font-size: 26px; font-weight: 800; }
+    .ovr span { font-size: 10px; font-weight: 700; }
+    .face { margin: 18px 8px 0 28px; flex: 1; border-radius: 8px 8px 0 0; overflow: hidden; background: #12351d; }
+    .face img, .face .sil { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    .face .sil { display: grid; place-items: center; color: #f0d48a; font-family: "Fraunces", serif; font-size: 34px; background: linear-gradient(180deg, #1b5a32, #0d2416); }
+    .meta { background: rgba(18,16,8,.78); color: #f6f1e6; padding: 7px 8px 8px; text-align: center; }
+    .meta .name { font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .meta .pts { margin-top: 3px; font-size: 10px; opacity: .85; }
+    .badges { display: flex; justify-content: center; gap: 3px; margin-top: 4px; }
+    .badge { font-size: 11px; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; background: rgba(240,212,138,.2); }
+    .legend { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 10px 16px; color: var(--mute); font-size: 12.5px; }
+    .toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%) translateY(12px); background: var(--pine); color: #fff; padding: 12px 16px; border-radius: 14px; opacity: 0; transition: .25s; z-index: 20; }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    footer { margin-top: 22px; text-align: center; color: #c9d7cc; font-size: 13px; }
+    .hidden { display: none !important; }
+    .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .plist { display: grid; gap: 8px; max-height: 360px; overflow: auto; }
+    .prow { display: grid; grid-template-columns: 1fr auto auto auto; gap: 8px; align-items: center; background: #f7f4ea; padding: 8px 10px; border-radius: 12px; font-size: 13px; }
+    .tiny { border: 0; background: #12351d; color: #fff; border-radius: 8px; padding: 6px 8px; cursor: pointer; font: inherit; font-size: 12px; }
+    .tiny.danger { background: #8a3a2a; }
+    @media (max-width: 900px) {
+      .hero, .layout, .admin-grid, .row, .prow { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="crest">⚽</div>
+        <div>
+          <em>Convocatoria</em>
+          <strong id="brandName">Laurita Vicuña</strong>
+        </div>
+      </div>
+      <div class="nav">
+        <div class="status"><span class="dot"></span> <span id="seasonLabel">Temporada 1 · 1/15</span></div>
+        <button class="ghost" id="openPublic" type="button">Plantel</button>
+        <button class="ghost" id="openAdmin" type="button">Admin</button>
+      </div>
+    </header>
+
+    <div id="publicView">
+      <section class="hero">
+        <article class="card poster">
+          <p class="eyebrow" id="whenLabel">Sábado 19 de septiembre · 19:00</p>
+          <h1>Plantel del partido<br>de <i>fútbol 7</i></h1>
+          <p class="lead">
+            Todos parten en 0. Foto y puntos se guardan por nombre.
+            Cada asistencia suma 50 puntos. Al completar 15 partidos de la temporada, los puntos vuelven a 0.
+          </p>
+          <div class="facts">
+            <span class="fact" id="venueChip">Centro Deportivo Laurita Vicuña</span>
+            <span class="fact" id="quotaChip">Cupo 14</span>
+            <span class="fact" id="timeChip">19:00</span>
+          </div>
+        </article>
+        <aside class="card side">
+          <div class="spots">
+            <b id="spotsLeft">14<small>/14</small></b>
+            <div class="bar"><i id="barFill"></i></div>
+            <p id="spotsLabel">Cupos disponibles</p>
+          </div>
+          <iframe id="mapFrame" title="Mapa del recinto" loading="lazy" src=""></iframe>
+          <p class="addr">
+            <strong id="venueTitle">Centro Deportivo Laurita Vicuña</strong><br>
+            <span id="venueAddr">Av. Ejército Libertador 2341, Villa La Foresta, Puente Alto</span><br>
+            <a id="venueLink" href="#" target="_blank" rel="noopener">Cómo llegar →</a>
+          </p>
+        </aside>
+      </section>
+
+      <section class="layout">
+        <form class="card" id="signupForm">
+          <h2>Nueva carta</h2>
+          <p class="sub">Usa siempre el mismo nombre. Si ya jugaste, se recupera la foto y se suman puntos.</p>
+          <div class="field">
+            <label>Foto de la carta</label>
+            <div class="photo-row">
+              <div class="preview-mini" id="previewBox"><div class="ph">👤</div></div>
+              <label class="file-btn">
+                <input id="photo" type="file" accept="image/*" />
+                Elegir imagen
+              </label>
+            </div>
+          </div>
+          <div class="field">
+            <label for="name">Nombre y Apellido</label>
+            <input id="name" type="text" required maxlength="32" placeholder="Ej. Cristóbal Medina" />
+          </div>
+          <div class="field">
+            <label for="nick">Apodo</label>
+            <input id="nick" type="text" maxlength="16" placeholder="Opcional" />
+          </div>
+          <div class="field">
+            <label for="leaveKey">Tu clave para salirte</label>
+            <input id="leaveKey" type="password" required minlength="4" maxlength="20" placeholder="Mínimo 4 caracteres. Recuérdala." />
+          </div>
+          <button class="cta" id="submitBtn" type="submit">Inscribir y crear carta</button>
+          <p class="hint">Guarda esa clave. La vas a necesitar si quieres salirte de la lista.</p>
+        </form>
+
+        <div class="card gallery">
+          <div class="gallery-top">
+            <div>
+              <h2>Plantel</h2>
+              <p class="sub">Cartas del partido actual.</p>
+            </div>
+            <span id="countLabel" style="color:var(--mute);font-size:13px">0 / 14</span>
+          </div>
+          <div class="cards" id="roster"></div>
+          <div class="legend">
+            <span>Bronce 0–99</span>
+            <span>Plata 100–249</span>
+            <span>Oro 250+</span>
+            <span>Reset a los 15 partidos</span>
+          </div>
+          <form id="leaveForm" style="margin-top:16px;padding-top:14px;border-top:1px solid var(--line)">
+            <h2 style="font-size:20px">Salirme de este partido</h2>
+            <p class="sub">Nombre y la clave que pusiste al anotarte. Se libera el cupo y se restan los puntos de esta fecha.</p>
+            <div class="row">
+              <div class="field"><input id="leaveName" type="text" placeholder="Tu nombre" required /></div>
+              <div class="field"><input id="leavePin" type="password" placeholder="Tu clave" required /></div>
+            </div>
+            <button class="cta warn" type="submit">Eliminarme de la lista</button>
+          </form>
+        </div>
+      </section>
+    </div>
+
+    <section class="card admin hidden" id="adminView">
+      <h2>Zona administración</h2>
+      <p class="sub" id="adminSub">Ingresa la clave para editar recinto, cupo, fecha y plantel.</p>
+
+      <form id="loginBox">
+        <div class="field">
+          <label for="pin">Clave admin</label>
+          <input id="pin" type="password" placeholder="Clave" />
+        </div>
+        <button class="cta" type="submit">Entrar</button>
+        <p class="hint">Clave inicial: admin123 · cámbiala después de entrar</p>
+      </form>
+
+      <div id="adminPanel" class="hidden">
+        <div class="admin-grid">
+          <div>
+            <h2 style="font-size:22px">Partido</h2>
+            <div class="field">
+              <label>Recinto</label>
+              <select id="cfgVenue"></select>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label>Fecha</label>
+                <input id="cfgDate" type="date" />
+              </div>
+              <div class="field">
+                <label>Hora</label>
+                <input id="cfgTime" type="time" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label>Cupo máximo</label>
+                <input id="cfgMax" type="number" min="2" max="30" />
+              </div>
+              <div class="field">
+                <label>Puntos por partido</label>
+                <input id="cfgPts" type="number" min="1" max="200" />
+              </div>
+            </div>
+            <div class="field">
+              <label>Nueva clave admin</label>
+              <input id="cfgPin" type="text" placeholder="Dejar vacío para no cambiar" />
+            </div>
+            <button class="cta" id="saveCfg" type="button">Guardar cambios</button>
+            <div class="row" style="margin-top:10px">
+              <button class="cta dark" id="nextMatch" type="button">Siguiente partido</button>
+              <button class="cta warn" id="resetSeason" type="button">Reiniciar temporada (puntos a 0)</button>
+            </div>
+          </div>
+          <div>
+            <h2 style="font-size:22px">Jugadores</h2>
+            <p class="sub">Agregar, editar puntos o eliminar del registro.</p>
+            <div class="row">
+              <div class="field"><input id="addName" type="text" placeholder="Nombre" /></div>
+              <div class="field"><input id="addNick" type="text" placeholder="Apodo" /></div>
+            </div>
+            <button class="cta dark" id="addPlayer" type="button" style="margin-bottom:12px">Agregar al registro</button>
+            <div class="plist" id="adminList"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer id="foot">Centro Deportivo Laurita Vicuña</footer>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const API = "";
+    const BADGES = [
+      { min: 50, icon: "🎟", title: "Debut" },
+      { min: 100, icon: "📅", title: "Asistencia" },
+      { min: 250, icon: "⭐", title: "Titular" },
+      { min: 400, icon: "©️", title: "Capitán" }
+    ];
+    const $ = (id) => document.getElementById(id);
+    let pendingPhoto = "";
+    let adminOk = false;
+    let adminPin = "";
+    let STATE = { cfg: {}, venue: {}, venues: [], roster: [] };
+
+    async function api(path, opts) {
+      const res = await fetch(API + path, opts);
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || "Error de servidor");
+      return data;
+    }
+    async function refresh() {
+      STATE = await api("/api/state");
+      applyPublic();
+    }
+    function toast(msg) {
+      const el = $("toast"); el.textContent = msg; el.classList.add("show");
+      setTimeout(() => el.classList.remove("show"), 2400);
+    }
+    function esc(s) {
+      return String(s || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+    }
+    function initials(name) {
+      return String(name||"").split(" ").filter(Boolean).slice(0,2).map(p => p[0]).join("").toUpperCase();
+    }
+    function tier(points) {
+      if (points >= 250) return { cls: "gold", label: "TIT", ovr: Math.min(99, 78 + Math.floor(points / 40)) };
+      if (points >= 100) return { cls: "silver", label: "REG", ovr: Math.min(84, 68 + Math.floor(points / 30)) };
+      return { cls: "bronze", label: "NOV", ovr: Math.min(72, 50 + Math.floor(points / 20)) };
+    }
+    function mapsQ(v) { return encodeURIComponent((v.name||"") + " " + (v.addr||"")); }
+    function formatWhen(cfg) {
+      const d = cfg.date ? new Date(cfg.date + "T12:00:00") : null;
+      const days = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+      const months = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+      if (!d || isNaN(d)) return cfg.time || "";
+      return days[d.getDay()] + " " + d.getDate() + " de " + months[d.getMonth()] + " · " + cfg.time;
+    }
+    function applyPublic() {
+      const cfg = STATE.cfg || {};
+      const v = STATE.venue || {};
+      const roster = STATE.roster || [];
+      const max = cfg.max || 14;
+      const left = Math.max(0, max - roster.length);
+      $("brandName").textContent = (v.name||"").replace("Centro Deportivo ", "").replace("Complejo Deportivo ", "");
+      $("whenLabel").textContent = formatWhen(cfg);
+      $("venueChip").textContent = v.name || "";
+      $("quotaChip").textContent = "Cupo " + max;
+      $("timeChip").textContent = cfg.time || "";
+      $("spotsLeft").innerHTML = left + "<small>/" + max + "</small>";
+      $("spotsLabel").textContent = left === 0 ? "Lista completa" : "Cupos disponibles";
+      $("barFill").style.width = (roster.length / max * 100) + "%";
+      $("countLabel").textContent = roster.length + " / " + max;
+      $("submitBtn").disabled = roster.length >= max;
+      $("seasonLabel").textContent = "Temporada " + cfg.season + " · " + cfg.matchInSeason + "/15";
+      $("venueTitle").textContent = v.name || "";
+      $("venueAddr").textContent = v.addr || "";
+      $("venueLink").href = "https://www.google.com/maps/search/?api=1&query=" + mapsQ(v);
+      $("mapFrame").src = "https://maps.google.com/maps?q=" + mapsQ(v) + "&z=16&output=embed";
+      $("foot").textContent = (v.name||"") + " · " + formatWhen(cfg) + " · partido " + cfg.matchInSeason + " de 15";
+      let html = "";
+      for (let i = 0; i < max; i++) html += cardHTML(roster[i], i);
+      $("roster").innerHTML = html;
+    }
+    function cardHTML(p, i) {
+      if (!p) return '<div class="fifa empty"><div><b>' + String(i+1).padStart(2,"0") + "</b>Cupo libre</div></div>";
+      const t = tier(p.points || 0);
+      const shown = (p.nick || p.name.split(" ")[0]).slice(0,14);
+      const face = p.photo ? '<img alt="" src="' + p.photo + '" />' : '<div class="sil">' + esc(initials(p.name)) + "</div>";
+      const badges = BADGES.filter(b => (p.points||0) >= b.min).map(b => '<span class="badge" title="'+b.title+'">'+b.icon+"</span>").join("");
+      return '<article class="fifa '+t.cls+'"><div class="fifa-inner"><div class="ovr"><strong>'+t.ovr+'</strong><span>'+t.label+'</span></div><div class="face">'+face+'</div><div class="meta"><div class="name">'+esc(shown)+'</div><div class="pts">'+(p.points||0)+' pts · '+esc(p.name)+'</div><div class="badges">'+badges+'</div></div></div></article>';
+    }
+    async function fillAdmin() {
+      const data = await api("/api/admin/players?pin=" + encodeURIComponent(adminPin));
+      const cfg = data.cfg;
+      $("cfgVenue").innerHTML = STATE.venues.map(v => '<option value="'+v.id+'"'+(v.id===cfg.venueId?" selected":"")+'>'+esc(v.name)+"</option>").join("");
+      $("cfgDate").value = cfg.date;
+      $("cfgTime").value = cfg.time;
+      $("cfgMax").value = cfg.max;
+      $("cfgPts").value = cfg.pts;
+      const keys = data.players.sort((a,b) => a.name.localeCompare(b.name));
+      $("adminList").innerHTML = keys.length ? keys.map(p => {
+        return '<div class="prow"><div><b>'+esc(p.name)+'</b> · '+p.points+' pts'+(p.inMatch?" · en este partido":"")+'</div>'+
+          '<button class="tiny" data-act="pts" data-k="'+esc(p.key)+'">+50</button>'+
+          '<button class="tiny" data-act="add" data-k="'+esc(p.key)+'">Al partido</button>'+
+          '<button class="tiny danger" data-act="del" data-k="'+esc(p.key)+'">Borrar</button></div>';
+      }).join("") : '<p class="sub">Aún no hay jugadores guardados.</p>';
+    }
+    function compressImage(file) {
+      return new Promise((resolve, reject) => {
+        if (!file || !file.type.startsWith("image/")) return reject();
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          canvas.width = 420; canvas.height = Math.round(420 * 1.28);
+          const ctx = canvas.getContext("2d");
+          const srcRatio = img.width / img.height, dstRatio = canvas.width / canvas.height;
+          let sx=0,sy=0,sw=img.width,sh=img.height;
+          if (srcRatio > dstRatio) { sw = img.height * dstRatio; sx = (img.width-sw)/2; }
+          else { sh = img.width / dstRatio; sy = (img.height-sh)/5; }
+          ctx.drawImage(img, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
+          URL.revokeObjectURL(url);
+          resolve(canvas.toDataURL("image/jpeg", 0.74));
+        };
+        img.onerror = reject;
+        img.src = url;
+      });
+    }
+    $("photo").addEventListener("change", async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      try {
+        pendingPhoto = await compressImage(file);
+        $("previewBox").innerHTML = '<img alt="" src="'+pendingPhoto+'" />';
+      } catch (err) { toast("No se pudo leer la imagen."); }
+    });
+    $("name").addEventListener("blur", async () => {
+      try {
+        const prev = await api("/api/lookup", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ name: $("name").value }) });
+        if (!prev.found) return;
+        if (prev.nick && !$("nick").value) $("nick").value = prev.nick;
+        if (prev.photo && !pendingPhoto) {
+          pendingPhoto = prev.photo;
+          $("previewBox").innerHTML = '<img alt="" src="'+prev.photo+'" />';
+        }
+      } catch (e) {}
+    });
+    $("signupForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      try {
+        const out = await api("/api/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: $("name").value.trim(),
+            nick: $("nick").value.trim(),
+            leaveKey: $("leaveKey").value.trim(),
+            photo: pendingPhoto
+          })
+        });
+        $("signupForm").reset(); pendingPhoto = "";
+        $("previewBox").innerHTML = '<div class="ph">👤</div>';
+        await refresh();
+        toast(out.message);
+      } catch (err) { toast(err.message); }
+    });
+    $("leaveForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      try {
+        const out = await api("/api/leave", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name: $("leaveName").value.trim(), leaveKey: $("leavePin").value.trim() })
+        });
+        $("leaveForm").reset();
+        await refresh();
+        toast(out.message);
+      } catch (err) { toast(err.message); }
+    });
+    $("openAdmin").addEventListener("click", () => {
+      $("publicView").classList.add("hidden");
+      $("adminView").classList.remove("hidden");
+      if (adminOk) { $("loginBox").classList.add("hidden"); $("adminPanel").classList.remove("hidden"); fillAdmin().catch((e)=>toast(e.message)); }
+    });
+    $("openPublic").addEventListener("click", () => {
+      $("adminView").classList.add("hidden");
+      $("publicView").classList.remove("hidden");
+      refresh().catch((e)=>toast(e.message));
+    });
+    $("loginBox").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      try {
+        adminPin = $("pin").value;
+        await api("/api/admin/login", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ pin: adminPin }) });
+        adminOk = true;
+        $("loginBox").classList.add("hidden");
+        $("adminPanel").classList.remove("hidden");
+        $("adminSub").textContent = "Puedes cambiar recinto, cupo, horario y el registro de jugadores.";
+        await fillAdmin();
+      } catch (err) { toast(err.message); }
+    });
+    $("saveCfg").addEventListener("click", async () => {
+      try {
+        await api("/api/admin/config", {
+          method:"POST", headers:{ "Content-Type":"application/json" },
+          body: JSON.stringify({
+            pin: adminPin,
+            venueId: $("cfgVenue").value,
+            date: $("cfgDate").value,
+            time: $("cfgTime").value,
+            max: $("cfgMax").value,
+            pts: $("cfgPts").value,
+            newPin: $("cfgPin").value.trim()
+          })
+        });
+        if ($("cfgPin").value.trim()) adminPin = $("cfgPin").value.trim();
+        await refresh();
+        toast("Cambios guardados.");
+      } catch (err) { toast(err.message); }
+    });
+    $("nextMatch").addEventListener("click", async () => {
+      try {
+        const out = await api("/api/admin/next-match", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ pin: adminPin }) });
+        await refresh(); await fillAdmin();
+        toast(out.message);
+      } catch (err) { toast(err.message); }
+    });
+    $("resetSeason").addEventListener("click", async () => {
+      if (!confirm("¿Pasar todos los puntos a 0 y empezar la temporada de nuevo?")) return;
+      try {
+        const out = await api("/api/admin/reset-season", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ pin: adminPin }) });
+        await refresh(); await fillAdmin();
+        toast(out.message);
+      } catch (err) { toast(err.message); }
+    });
+    $("addPlayer").addEventListener("click", async () => {
+      try {
+        await api("/api/admin/player", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ pin: adminPin, name: $("addName").value.trim(), nick: $("addNick").value.trim() }) });
+        $("addName").value = ""; $("addNick").value = "";
+        await fillAdmin();
+        toast("Jugador en el registro.");
+      } catch (err) { toast(err.message); }
+    });
+    $("adminList").addEventListener("click", async (e) => {
+      const btn = e.target.closest("button[data-act]");
+      if (!btn) return;
+      try {
+        await api("/api/admin/player-action", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ pin: adminPin, key: btn.getAttribute("data-k"), act: btn.getAttribute("data-act") }) });
+        await refresh(); await fillAdmin();
+      } catch (err) { toast(err.message); }
+    });
+    refresh().catch((e) => toast(e.message));
+  </script>
+</body>
+</html>
