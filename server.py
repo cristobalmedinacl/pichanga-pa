@@ -5,9 +5,10 @@ import os
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse, parse_qs
 
+import store
+
 ROOT = os.path.dirname(os.path.abspath(__file__))
 PUBLIC = os.path.join(ROOT, "public")
-DB_PATH = os.path.join(ROOT, "data", "db.json")
 PORT = int(os.environ.get("PORT", "10000"))
 HOST = "0.0.0.0"
 
@@ -32,40 +33,15 @@ VENUES = [
 
 
 def empty_db():
-    return {
-        "cfg": {
-            "pin": "admin123",
-            "venueId": "laurita",
-            "date": "2026-09-19",
-            "time": "19:00",
-            "max": 14,
-            "pts": 50,
-            "season": 1,
-            "matchInSeason": 1,
-        },
-        "profiles": {},
-        "match": [],
-    }
+    return store.empty_db()
 
 
 def load():
-    try:
-        with open(DB_PATH, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        base = empty_db()
-        base.update(data)
-        base["cfg"] = {**empty_db()["cfg"], **data.get("cfg", {})}
-        return base
-    except Exception:
-        db = empty_db()
-        save(db)
-        return db
+    return store.load()
 
 
 def save(db):
-    os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
-    with open(DB_PATH, "w", encoding="utf-8") as f:
-        json.dump(db, f, ensure_ascii=False, indent=2)
+    return store.save(db)
 
 
 def norm(name):
@@ -93,7 +69,25 @@ def public_state():
         })
     cfg = dict(db["cfg"])
     cfg.pop("pin", None)
-    return {"cfg": cfg, "venue": venue_of(db), "venues": VENUES, "roster": roster}
+    vk = "s%s-m%s" % (cfg.get("season", 1), cfg.get("matchInSeason", 1))
+    bucket = (db.get("votes") or {}).get(vk) or {"tally": {}, "voters": []}
+    results = []
+    for k, n in sorted(bucket.get("tally", {}).items(), key=lambda x: (-x[1], x[0])):
+        p = db["profiles"].get(k)
+        if p:
+            results.append({"key": k, "name": p.get("name"), "nick": p.get("nick") or "", "votes": n})
+    return {
+        "cfg": cfg,
+        "venue": venue_of(db),
+        "venues": VENUES,
+        "roster": roster,
+        "poll": {
+            "id": vk,
+            "label": "Jornada %s · Temporada %s" % (cfg.get("matchInSeason", 1), cfg.get("season", 1)),
+            "total": sum(bucket.get("tally", {}).values()),
+            "results": results,
+        },
+    }
 
 
 class Handler(SimpleHTTPRequestHandler):
